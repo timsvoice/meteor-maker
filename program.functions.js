@@ -59,21 +59,20 @@ const npmInstall = (nodePackage) => {
 }
 
 exports.newProject = (name) => {
-  // copy the files and get the resulting filepaths
+  // copy the files from template directory
   copyFiles('/usr/local/lib/node_modules/meteor-maker/files', './tmp')
-    .then(() => {
-      return recurseFiles('./tmp')
-    })
-    .then((files) => {      
-      // process each file using handlebar variables
+    // recursively get all the file paths
+    .then(() => { return recurseFiles('./tmp') })
+    // process the files using handlebars
+    .then((files) => {            
+      
       files.forEach((fileName) => {
         let path = fileName;
         let variables = { name: name, flowRouter: true };
         processTemplate(path, variables);
       })
       // copy files into root and then delete the tmp folder
-      copyFiles('./tmp', './').then(() => { 
-        deleteFolderRecursive('./tmp') } 
-      );
+      copyFiles('./tmp', './').then( () => { deleteFolderRecursive('./tmp') } );
+
     })
 }
