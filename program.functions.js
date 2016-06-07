@@ -22,18 +22,18 @@ const deleteFolderRecursive = function(path) {
 
 const copyFiles = (source, dest) => {
   return new Promise( (fulfill, reject) => {
-    ncp(source, dest, (err) => {
+    ncp(source, dest, (err) => {      
       if (err) reject(err);
-      else fulfill('files copied');
+      fulfill('files copied');
     })
   })  
 }
 
-const recurseFiles = (path) => {
+const recurseFiles = (path) => {  
   return new Promise( (fulfill, reject) => {
     recursive(path, (err, files) => {
-      if (err) reject(err);
-      else fulfill(files);
+      if (err) reject(err);                  
+      fulfill(files);
     })
   })  
 }
@@ -59,10 +59,12 @@ const npmInstall = (nodePackage) => {
 }
 
 exports.newProject = (name) => {
+  // copy the files and get the resulting filepaths
   copyFiles('/usr/local/lib/node_modules/meteor-maker/files', './tmp')
-    // recursively get all the file paths in the new tmp folder
-    .then( recurseFiles('./tmp') )
-    .then( (files) => {
+    .then(() => {
+      return recurseFiles('./tmp')
+    })
+    .then((files) => {      
       // process each file using handlebar variables
       files.forEach((fileName) => {
         let path = fileName;
@@ -70,6 +72,8 @@ exports.newProject = (name) => {
         processTemplate(path, variables);
       })
       // copy files into root and then delete the tmp folder
-      copyFiles('./tmp', './').then(deleteFolderRecursive('./tmp'));
+      copyFiles('./tmp', './').then(() => { 
+        deleteFolderRecursive('./tmp') } 
+      );
     })
 }

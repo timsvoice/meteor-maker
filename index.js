@@ -7,23 +7,23 @@ const functions = require('./program.functions.js');
 
 program
   .version('0.0.1')
-  .command('g:project <name>')
+  .command('project <name>')
   .description('Scaffold a new Meteor project')
   .action(functions.newProject);
 
 program
-  .command('g:method <name>')
+  .command('method <name>')
   .description('Create a new method')
   .action(functions.newMethod);
 
 program
-  .command('g:api <name>')
+  .command('api <name>')
   .description('Create a new API with methods and tests')
   .option('-T, --no-tests', 'don\'t include a test file')
   .action(functions.newApi);
 
 program
-  .command('g:component <name>')
+  .command('component <name>')
   .description('Create a new UI component')
   .option('-js, --no-js', 'don\'t generate the JS file for this component')
   .option('-html, --no-html', 'don\'t generate the HTML file for this component')
@@ -31,7 +31,7 @@ program
   .action(functions.newComponent);
 
 program
-  .command('g:page <name>')
+  .command('page <name>')
   .description('Create a new page')
   .option('-js, --no-js', 'don\'t generate the JS file for this page')
   .option('-html, --no-html', 'don\'t generate the HTML file for this page')
@@ -39,7 +39,7 @@ program
   .action(functions.newPage);
 
 program
-  .command('g:layout <name>')
+  .command('layout <name>')
   .description('Create a new layout')
   .option('-js, --no-js', 'don\'t generate the JS file for this layout')
   .option('-html, --no-html', 'don\'t generate the HTML file for this layout')
