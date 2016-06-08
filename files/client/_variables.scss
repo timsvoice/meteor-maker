@@ -1,0 +1,79 @@
+/* ============================ 
+  Colors
+============================ */
+
+$color-light-branding: hsla(84, 41%, 39%, 1.0);
+$color-medium-branding: hsla(84, 77%, 14%, 1.0);;
+$color-dark-branding: hsla(84, 13%, 13%, 1.0);
+
+$color-white: hsla(0, 0%, 98%, 1.0);
+$color-black: hsla(0, 0%, 4%, 1.0);
+
+$color-highlight: hsla(156, 38%, 40%, 1.0);
+
+$color-light-gray: hsla(0, 0%, 94%, 1.0);
+$color-medium-gray: hsla(0, 0%, 70%, 1.0);
+$color-dark-gray: hsla(0, 0%, 20%, 1.0);
+
+$color-error: hsla(8, 82%, 49%, 1.0);
+$color-error-background: transparentize($color-error, 0.85);
+
+$color-overlay: transparentize($color-light-branding, 0.3);
+
+// box colors
+
+$red: #F44336;
+$pink: #E91E63;
+$purple: #9C27B0;
+$indigo: #3F51B5;
+$blue: #2196F3;
+$cyan: #00BCD4;
+$teal: #009688;
+$gray: #607D8B;
+$light-green: #8BC34A;
+$lime: #CDDC39;
+$yellow: #FFEB3B;
+$orange: #FF9800;
+
+/* ============================ 
+  Typography
+============================ */
+
+@import url(https://fonts.googleapis.com/css?family=Satisfy);
+
+$header-font: "Satisfy", Helvetica, Arial, sans-serif;
+$body-font: "Asap", Helvetica, Arial, sans-serif;
+
+$text-heavy:900;
+$text-medium:600;
+$text-light:200;
+
+$underline: 0.0625rem;
+
+/* ============================ 
+  Buttons
+============================ */
+
+$button-color: transparentize($color-light-branding, 0.9);
+$button-color-hover: transparentize($color-light-branding, 0.5);
+$button-color-secondary: $color-light-gray;
+$button-color-secondary-hover: darken($color-light-gray, 0.1);
+$button-border-color: $color-light-gray;
+
+/* ============================ 
+  Borders
+============================ */
+
+$basic-border: 1px solid $color-medium-gray;
+$base-border: 1px solid $color-light-branding;
+$basic-border-thick: 5px solid $color-medium-branding;
+$button-border: 2px solid $button-border-color;
+$modal-border: 5px solid $color-light-branding;
+$input-border: 1px solid $color-light-branding;
+$border-error: 1px solid $color-error;
+
+/* ============================ 
+  Backgrounds
+============================ */
+
+$table-head-background: $color-light-branding;

@@ -1,0 +1,27 @@
+@import '{zurb:foundation-sites}/scss/foundation';
+@import "../../../client/mixins";
+@import "../../../client/variables";
+
+.home-container {
+  height: 100vh;
+  @include frame(
+    $wrap: nowrap,
+    $overflow: hidden
+  ); 
+  @include full-image(
+    $image: 'background.jpg'
+  );
+}
+
+.home-header {
+  h1, h2 {
+    font-family: $header-font;
+  }
+}
+
+.home-demo {
+  @include flex-grid-row();
+  video {
+    max-height: 25rem;
+  }
+}

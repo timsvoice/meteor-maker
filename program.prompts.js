@@ -14,5 +14,11 @@ exports.newProjectPrompts = [
     name: 'foundation',
     message: 'Use Foundation Framework?',
     default: true
+  },
+  {
+    type: 'confirm',
+    name: 'sassStructure',
+    message: 'Setup mixin and variable sass files?',
+    default: true
   }
 ]

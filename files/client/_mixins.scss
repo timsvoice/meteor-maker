@@ -1,0 +1,15 @@
+@mixin frame ($wrap, $overflow) {
+  display: flex;
+  flex-flow: column $wrap;
+  max-height: 100vh;
+  overflow: $overflow;
+  backface-visibility: hidden;
+}
+
+@mixin full-image($image) {
+  background: url($image) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
