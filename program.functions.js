@@ -8,20 +8,6 @@ const recursive = require('recursive-readdir');
 const inquirer = require('inquirer');
 const prompts = require('./program.prompts.js');
 
-const deleteFolderRecursive = function(path) {
-  if( fs.existsSync(path) ) {
-    fs.readdirSync(path).forEach(function(file,index){
-      var curPath = path + "/" + file;
-      if(fs.lstatSync(curPath).isDirectory()) { // recurse
-        deleteFolderRecursive(curPath);
-      } else { // delete file
-        fs.unlinkSync(curPath);
-      }
-    });
-    fs.rmdirSync(path);
-  }
-};
-
 const copyFiles = (source, dest) => {
   return new Promise( (fulfill, reject) => {
     ncp(source, dest, (err) => {      
@@ -39,6 +25,20 @@ const recurseFiles = (path) => {
     })
   })  
 }
+
+const deleteFolderRecursive = function(path) {
+  if( fs.existsSync(path) ) {
+    fs.readdirSync(path).forEach(function(file,index){
+      var curPath = path + "/" + file;
+      if(fs.lstatSync(curPath).isDirectory()) { // recurse
+        deleteFolderRecursive(curPath);
+      } else { // delete file
+        fs.unlinkSync(curPath);
+      }
+    });
+    fs.rmdirSync(path);
+  }
+};
 
 const processTemplateFiles = (files, variables) => {  
   files.forEach((filePath) => {
@@ -63,18 +63,36 @@ const npmInstall = (nodePackage) => {
   });
 }
 
+const appRename = (newName) => {
+  fs.readFile('./package.json', (err, data) => {
+    if (err) throw err;
+    let content = JSON.parse(data.toString('utf8'));
+    content.name = newName;    
+    fs.writeFile('./package.json', JSON.stringify(content), (err) => {
+      if (err) throw err;
+    });    
+  })
+}
+
 exports.newProject = (name) => {
   // copy the files from template directory
   copyFiles('/usr/local/lib/node_modules/meteor-maker/files', './tmp')
     // recursively get all the file paths
     .then(() => { return recurseFiles('./tmp') })    
-    .then((files) => {                        
+    .then((files) => {
+      // get user project preferences
       inquirer.prompt(prompts.newProjectPrompts).then((answers) => {
+        // process files with Handlebars
         processTemplateFiles(files, answers);        
+        // install Foundation if requested
         if (answers.foundation) npmInstall('foundation-sites');
-        copyFiles('./tmp', './').then( () => { deleteFolderRecursive('./tmp') } );
+        // transfer files from tmp to root
+        copyFiles('./tmp', './').then( () => { 
+          // delete temp folder
+          deleteFolderRecursive('./tmp'); 
+          // rename app
+          appRename(name); 
+        });
       })
-      // process the files using handlebars      
-      // copy files into root and then delete the tmp folder            
     })
 }

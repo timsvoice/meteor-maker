@@ -4,12 +4,6 @@
 
 exports.newProjectPrompts = [
   {
-    type: 'input',
-    name: 'name',
-    message: 'Project Name',
-    default: 'newapp'
-  },
-  {
     type: 'confirm',
     name: 'flowRouter',
     message: 'Use FlowRouter?',
@@ -18,7 +12,7 @@ exports.newProjectPrompts = [
   {
     type: 'confirm',
     name: 'foundation',
-    message: 'Use Foundation for Sites?',
+    message: 'Use Foundation Framework?',
     default: true
   }
 ]
