@@ -5,6 +5,8 @@ const ncp = require('ncp').ncp;
 const Handlebars = require('handlebars');
 const exec = require('child_process').exec;
 const recursive = require('recursive-readdir');
+const inquirer = require('inquirer');
+const prompts = require('./program.prompts.js');
 
 const deleteFolderRecursive = function(path) {
   if( fs.existsSync(path) ) {
@@ -55,6 +57,7 @@ const processTemplateFiles = (files, variables) => {
 
 const npmInstall = (nodePackage) => {
   let command = 'npm install ' + nodePackage + ' --save';
+  console.log(command);
   exec(command, (err, stdout, stderr ) => {
     console.log(stdout);
   });
@@ -65,11 +68,13 @@ exports.newProject = (name) => {
   copyFiles('/usr/local/lib/node_modules/meteor-maker/files', './tmp')
     // recursively get all the file paths
     .then(() => { return recurseFiles('./tmp') })    
-    .then((files) => {                  
-      let variables = { name: name, flowRouter: true };
-      // process the files using handlebars
-      processTemplateFiles(files, variables);
-      // copy files into root and then delete the tmp folder      
-      copyFiles('./tmp', './').then( () => { deleteFolderRecursive('./tmp') } );
+    .then((files) => {                        
+      inquirer.prompt(prompts.newProjectPrompts).then((answers) => {
+        processTemplateFiles(files, answers);        
+        if (answers.foundation) npmInstall('foundation-sites');
+        copyFiles('./tmp', './').then( () => { deleteFolderRecursive('./tmp') } );
+      })
+      // process the files using handlebars      
+      // copy files into root and then delete the tmp folder            
     })
 }
