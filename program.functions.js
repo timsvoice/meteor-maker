@@ -38,17 +38,19 @@ const recurseFiles = (path) => {
   })  
 }
 
-const processTemplate = (path, variables) => {
-  let pathString = path;  
-  let file = fs.readFile(pathString, (err, data) => {
-    if (data) {
-      let source = data.toString('utf8');    
-      let template = Handlebars.compile(source);    
-      let result = template(variables);      
-      // write the new file with the result from the handlebars template
-      fs.writeFile(path, result); 
-    }   
-  });  
+const processTemplateFiles = (files, variables) => {  
+  files.forEach((filePath) => {
+    let file = fs.readFile(filePath, (err, data) => {
+      if (err) console.log(err);
+      if (data) {
+        let source = data.toString('utf8');    
+        let template = Handlebars.compile(source);    
+        let result = template(variables);      
+        // write the new file with the result from the handlebars template
+        fs.writeFile(filePath, result); 
+      }   
+    });  
+  }) 
 }
 
 const npmInstall = (nodePackage) => {
@@ -62,17 +64,12 @@ exports.newProject = (name) => {
   // copy the files from template directory
   copyFiles('/usr/local/lib/node_modules/meteor-maker/files', './tmp')
     // recursively get all the file paths
-    .then(() => { return recurseFiles('./tmp') })
-    // process the files using handlebars
-    .then((files) => {            
-      
-      files.forEach((fileName) => {
-        let path = fileName;
-        let variables = { name: name, flowRouter: true };
-        processTemplate(path, variables);
-      })
-      // copy files into root and then delete the tmp folder
+    .then(() => { return recurseFiles('./tmp') })    
+    .then((files) => {                  
+      let variables = { name: name, flowRouter: true };
+      // process the files using handlebars
+      processTemplateFiles(files, variables);
+      // copy files into root and then delete the tmp folder      
       copyFiles('./tmp', './').then( () => { deleteFolderRecursive('./tmp') } );
-
     })
 }
