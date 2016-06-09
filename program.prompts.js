@@ -22,3 +22,12 @@ exports.newProjectPrompts = [
     default: true
   }
 ]
+
+exports.newMethodPrompts = [
+  {
+    type: 'list',
+    name: 'selectAPI',
+    message: 'Which API does this method belong to?',
+    choices: [],    
+  }
+]

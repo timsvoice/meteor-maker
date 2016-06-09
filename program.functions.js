@@ -1,9 +1,9 @@
 'use strict';
 
+const fs = require('fs');
 const inquirer = require('inquirer');
 const prompts = require('./program.prompts.js');
 const helpers = require('./program.helpers.js');
-
 
 exports.newProject = (name) => {  
   // copy the files from template directory
@@ -54,5 +54,24 @@ exports.newAPI = (name) => {
           console.log( name + 'API registered with imports/startup/server/register-api.js' );
         })        
       })
+  })
+}
+
+exports.newMethod = (name) => {
+
+  const templatePath = '/usr/local/lib/node_modules/meteor-maker/template.method.js';
+  const destPath = 'imports/api';
+  helpers.listDir(destPath).then((res) => {
+    prompts.newMethodPrompts[0].choices = res;
+    inquirer.prompt(prompts.newMethodPrompts).then((answers) => {
+      const methodPath = `imports/api/${answers.selectAPI}/${answers.selectAPI}.methods.js`;
+      fs.readFile(templatePath, (err, data) => {
+        const methodData = data.toString('utf8'); 
+        const files = [methodPath];
+        helpers.registerMethod(methodPath, methodData);
+        helpers.processTemplateFiles(files, {apiName: answers.selectAPI});
+        console.log('New method added to ' + methodPath);
+      });
+    })
   })
 }

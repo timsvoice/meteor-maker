@@ -19,6 +19,15 @@ exports.createDir = (name, path) => {
   })
 }
 
+exports.listDir = (path) => {
+  return new Promise( (fulfill, reject) => {
+    fs.readdir(path, (err, items) => {
+      if (err) reject(err);
+      fulfill(items);
+    })
+  })  
+}
+
 exports.createFile = (name, source, dest) => {
   return new Promise( (fulfill, reject) => {
     fs.readFile(source, (err, data) => {
@@ -85,7 +94,7 @@ exports.processTemplateFiles = (files, variables, newNames) => {
             fs.writeFile(newPath, result);
             fs.unlink(filePath);
           } else {
-            fs.writeFile(newPath, result);
+            fs.writeFile(filePath, result);
           }          
           fulfill(result);
         }   
@@ -133,6 +142,15 @@ exports.registerAPI = (name, path, data) => {
     fs.appendFile(path, data, (err) => {
       if (err) reject(err);
       fulfill('API Registered!');
+    })
+  })
+}
+
+exports.registerMethod = (path, data) => {
+  return new Promise( (fulfill, reject) => {
+    fs.appendFile(path, data, (err) => {
+      if (err) reject(err);      
+      fulfill('Method Registered!');
     })
   })
 }
