@@ -20,7 +20,7 @@ program
   .command('api <name>')
   .description('Create a new API with methods and tests')
   .option('-T, --no-tests', 'don\'t include a test file')
-  .action(functions.newApi);
+  .action(functions.newAPI);
 
 program
   .command('component <name>')

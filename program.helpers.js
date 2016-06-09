@@ -7,11 +7,34 @@ const exec = require('child_process').exec;
 const recursive = require('recursive-readdir');
 const inquirer = require('inquirer');
 const prompts = require('./program.prompts.js');
+const _ = require('underscore');
 
-exports.copyFiles = (source, dest) => {
+exports.createDir = (name, path) => {
+  const destPath = path + '/' + name;
+  return new Promise( (fulfill, reject) => {
+    fs.mkdir(destPath, (err) => {
+      if (err) reject(err);
+      fulfill(destPath);
+    })
+  })
+}
+
+exports.createFile = (name, source, dest) => {
+  return new Promise( (fulfill, reject) => {
+    fs.readFile(source, (err, data) => {
+      if (err) reject(err);
+      fs.writeFile(dest, data, (err) => {
+        if (err) reject(err);
+        fulfill('File write successful!');
+      });
+    })
+  })
+}
+
+exports.copyFiles = (source, dest) => {  
   return new Promise( (fulfill, reject) => {
     ncp(source, dest, (err) => {      
-      if (err) reject(err);
+      if (err) reject(err);      
       fulfill('files copied');
     })
   })  
@@ -20,7 +43,7 @@ exports.copyFiles = (source, dest) => {
 exports.recurseFiles = (path) => {  
   return new Promise( (fulfill, reject) => {
     recursive(path, (err, files) => {
-      if (err) reject(err);                  
+      if (err) reject(err);                        
       fulfill(files);
     })
   })  
@@ -47,9 +70,9 @@ exports.deleteFiles = (files) => {
   })
 }
 
-exports.processTemplateFiles = (files, variables) => {  
+exports.processTemplateFiles = (files, variables, newNames) => {  
   return new Promise( (fulfill, reject) => {
-    files.forEach((filePath) => {
+    files.forEach((filePath, ind) => {
       let file = fs.readFile(filePath, (err, data) => {
         if (err) reject(err);
         if (data) {
@@ -57,7 +80,13 @@ exports.processTemplateFiles = (files, variables) => {
           let template = Handlebars.compile(source);    
           let result = template(variables);      
           // write the new file with the result from the handlebars template
-          fs.writeFile(filePath, result);
+          if (newNames) {
+            let newPath = newNames[ind];
+            fs.writeFile(newPath, result);
+            fs.unlink(filePath);
+          } else {
+            fs.writeFile(newPath, result);
+          }          
           fulfill(result);
         }   
       });  
@@ -85,16 +114,6 @@ exports.meteorInstall = (meteorPackage) => {
   })
 }
 
-exports.npmStart = () => {
-  let command = 'npm run start';  
-  return new Promise( (fulfill, reject) => {
-    exec(command, (err, stdout, stderr ) => {
-      if (err) reject(err);      
-      fulfill(stdout);
-    });
-  })
-}
-
 exports.appRename = (newName) => {
   return new Promise((fulfill, reject) => {
     fs.readFile('./package.json', (err, data) => {
@@ -108,3 +127,16 @@ exports.appRename = (newName) => {
     })
   })
 }
+
+exports.registerAPI = (name, path, data) => {
+  return new Promise( (fulfill, reject) => {
+    fs.appendFile(path, data, (err) => {
+      if (err) reject(err);
+      fulfill('API Registered!');
+    })
+  })
+}
+
+Handlebars.registerHelper('capitalize', (word) => {
+  return word.charAt(0).toUpperCase() + word.slice(1);
+})
