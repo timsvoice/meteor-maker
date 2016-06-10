@@ -1,4 +1,4 @@
-import './{{uiName}}.html'
+import './{{lowercase uiName}}.html'
 
 import { Meteor } from 'meteor/meteor'
 

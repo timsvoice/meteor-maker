@@ -42,8 +42,7 @@ exports.createFile = (name, source, dest) => {
 
 exports.copyFiles = (source, dest) => {  
   return new Promise( (fulfill, reject) => {
-    ncp(source, dest, (err) => {      
-      console.log(err);
+    ncp(source, dest, (err) => {            
       if (err) reject(err);      
       fulfill('files copied');
     })
@@ -81,6 +80,7 @@ exports.deleteFiles = (files) => {
 }
 
 exports.processTemplateFiles = (files, variables, newNames) => {  
+  console.log(files);
   return new Promise( (fulfill, reject) => {
     files.forEach((filePath, ind) => {
       let file = fs.readFile(filePath, (err, data) => {
@@ -158,4 +158,8 @@ exports.registerMethod = (path, data) => {
 
 Handlebars.registerHelper('capitalize', (word) => {
   return word.charAt(0).toUpperCase() + word.slice(1);
+})
+
+Handlebars.registerHelper('lowercase', (word) => {
+  return word.toLowerCase();
 })

@@ -12,40 +12,20 @@ program
   .action(functions.newProject);
 
 program
-  .command('method <name>')
+  .command('g:method <name>')
   .description('Create a new method')
   .action(functions.newMethod);
 
 program
-  .command('api <name>')
+  .command('g:api <name>')
   .description('Create a new API with methods and tests')
   .option('-T, --no-tests', 'don\'t include a test file')
   .action(functions.newAPI);
 
 program
-  .command('ui')
+  .command('g:ui <type>')
   .description('Create a new UI element')
-  .option('-js, --no-js', 'don\'t generate the JS file for this component')
-  .option('-html, --no-html', 'don\'t generate the HTML file for this component')
-  .option('-sass, --no-sass', 'don\'t generate the SASS file for this component')
+  .option('--no-sass', 'don\'t generate the SASS file for this component')
   .action(functions.newUI);
-
-program
-  .command('page <name>')
-  .description('Create a new page')
-  .option('-js, --no-js', 'don\'t generate the JS file for this page')
-  .option('-html, --no-html', 'don\'t generate the HTML file for this page')
-  .option('-sass, --no-sass', 'don\'t generate the SASS file for this page')
-  .action(functions.newPage);
-
-program
-  .command('layout <name>')
-  .description('Create a new layout')
-  .option('-js, --no-js', 'don\'t generate the JS file for this layout')
-  .option('-html, --no-html', 'don\'t generate the HTML file for this layout')
-  .option('-sass, --no-sass', 'don\'t generate the SASS file for this layout')
-  .action(functions.newLayout);
-
-
 
 program.parse(process.argv);

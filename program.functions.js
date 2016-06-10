@@ -43,7 +43,8 @@ exports.newAPI = (name) => {
   const newNames = [
     'imports/api/' + name + '/' + name + '.tests.js',
     'imports/api/' + name + '/' + name + '.js',
-    'imports/api/' + name + '/' + name + '.methods.js'
+    'imports/api/' + name + '/' + name + '.methods.js',
+    'imports/api/' + name + '/server/' + name + '.methods.js',
   ];
 
   helpers.createDir(name, './imports/api').then( (res) => {
@@ -55,7 +56,7 @@ exports.newAPI = (name) => {
           console.log( name + ' API methods created at imports/api/' + name + '.methods.js' );
           console.log( name + ' API method tests created at imports/api/' + name + '.tests.js' );
           console.log( name + ' API collection created at imports/api/' + name + '.js' );
-          console.log( name + 'API registered with imports/startup/server/register-api.js' );
+          console.log( name + ' API registered with imports/startup/server/register-api.js' );
         })        
       })
   })
@@ -82,17 +83,21 @@ exports.newMethod = (name) => {
   })
 }
 
-exports.newUI = () => {
-  inquirer.prompt(prompts.newUIPrompts).then((answers) => {    
-    const type = answers.uiType;
+exports.newUI = (uiType) => {  
+  
+  prompts.newUIPrompts[0].message = `What\'s the name of your ${uiType}? (must be cammelCase)`
+  
+  inquirer.prompt(prompts.newUIPrompts).then((answers) => {        
+    
+    const type = uiType;
     const name = answers.uiName;
     const templatePath = '/usr/local/lib/node_modules/meteor-maker/templates/' + type + 's';
-    const destPath = 'imports/ui/' + type + 's/' + name;
+    const destPath = 'imports/ui/' + type + 's/' + name.toLowerCase();
     const typePath = `imports/ui/${type}s/`;
     const newNames = [
-      'imports/ui/' + type + 's/' + name + '/' + name + '.html', 
-      'imports/ui/' + type + 's/' + name + '/' + name + '.js',
-      'imports/ui/' + type + 's/' + name + '/' + name + '.scss',
+      'imports/ui/' + type + 's/' + name.toLowerCase() + '/' + name.toLowerCase() + '.html', 
+      'imports/ui/' + type + 's/' + name.toLowerCase() + '/' + name.toLowerCase() + '.js',
+      'imports/ui/' + type + 's/' + name.toLowerCase() + '/' + name.toLowerCase() + '.scss',
     ];
     
     fs.stat(typePath, (err, stats) => {      
