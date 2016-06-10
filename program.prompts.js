@@ -31,3 +31,17 @@ exports.newMethodPrompts = [
     choices: [],    
   }
 ]
+
+exports.newUIPrompts = [
+  {
+    type: 'list',
+    name: 'uiType',
+    message: 'What type of UI element are you creating',
+    choices: ['component', 'layout', 'page'],
+  },
+  {
+    type: 'input',
+    name: 'uiName',
+    message: 'What\'s the name of your ui element?',    
+  }
+]

@@ -1,7 +1,7 @@
 
 
-export const {{apiName}}Method = new ValidatedMethod({
-  name: '{{apiName}}.method',
+export const {{methodName}} = new ValidatedMethod({
+  name: '{{methodName}}.method',
   validate: new SimpleSchema({
     /*argument: { type: String },*/
   }).validator(),

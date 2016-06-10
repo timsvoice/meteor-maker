@@ -40,7 +40,11 @@ exports.newAPI = (name) => {
   const templatePath = '/usr/local/lib/node_modules/meteor-maker/files/imports/api/newAPI';
   const destPath = 'imports/api/' + name;
   const registerAPI = "\nimport '../../api/" + name + "/methods.js';";
-  const newNames = ['imports/api/' + name + '/' + name + '.tests.js', 'imports/api/' + name + '/' + name + '.js', 'imports/api/' + name + '/' + name + '.methods.js'];
+  const newNames = [
+    'imports/api/' + name + '/' + name + '.tests.js',
+    'imports/api/' + name + '/' + name + '.js',
+    'imports/api/' + name + '/' + name + '.methods.js'
+  ];
 
   helpers.createDir(name, './imports/api').then( (res) => {
     helpers.copyFiles(templatePath, res)
@@ -59,19 +63,52 @@ exports.newAPI = (name) => {
 
 exports.newMethod = (name) => {
 
-  const templatePath = '/usr/local/lib/node_modules/meteor-maker/template.method.js';
+  const templatePath = '/usr/local/lib/node_modules/meteor-maker/templates/methods/template.method.js';
   const destPath = 'imports/api';
+  const methodPath = `imports/api/${answers.selectAPI}/${answers.selectAPI}.methods.js`;
+
   helpers.listDir(destPath).then((res) => {
     prompts.newMethodPrompts[0].choices = res;
     inquirer.prompt(prompts.newMethodPrompts).then((answers) => {
-      const methodPath = `imports/api/${answers.selectAPI}/${answers.selectAPI}.methods.js`;
+      
       fs.readFile(templatePath, (err, data) => {
         const methodData = data.toString('utf8'); 
         const files = [methodPath];
         helpers.registerMethod(methodPath, methodData);
-        helpers.processTemplateFiles(files, {apiName: answers.selectAPI});
+        helpers.processTemplateFiles(files, {methodName: name});
         console.log('New method added to ' + methodPath);
       });
     })
   })
+}
+
+exports.newUI = () => {
+  inquirer.prompt(prompts.newUIPrompts).then((answers) => {    
+    const type = answers.uiType;
+    const name = answers.uiName;
+    const templatePath = '/usr/local/lib/node_modules/meteor-maker/templates/' + type + 's';
+    const destPath = 'imports/ui/' + type + 's/' + name;
+    const typePath = `imports/ui/${type}s/`;
+    const newNames = [
+      'imports/ui/' + type + 's/' + name + '/' + name + '.html', 
+      'imports/ui/' + type + 's/' + name + '/' + name + '.js',
+      'imports/ui/' + type + 's/' + name + '/' + name + '.scss',
+    ];
+    
+    fs.stat(typePath, (err, stats) => {      
+      if (err) {
+        fs.mkdirSync(typePath, (err) => {        
+          if (err) console.log(err);
+        })
+      } 
+      helpers.copyFiles(templatePath, destPath)
+        .then((res) => {                          
+          helpers.recurseFiles(destPath).then((files) => {                        
+              helpers.processTemplateFiles(files, { uiName: name, uiType: type }, newNames);
+              console.log( name + ' ' + type + ' created at ' + destPath );                  
+          })        
+        })
+    })
+  })    
+
 }

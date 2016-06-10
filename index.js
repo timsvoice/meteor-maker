@@ -23,12 +23,12 @@ program
   .action(functions.newAPI);
 
 program
-  .command('component <name>')
-  .description('Create a new UI component')
+  .command('ui')
+  .description('Create a new UI element')
   .option('-js, --no-js', 'don\'t generate the JS file for this component')
   .option('-html, --no-html', 'don\'t generate the HTML file for this component')
   .option('-sass, --no-sass', 'don\'t generate the SASS file for this component')
-  .action(functions.newComponent);
+  .action(functions.newUI);
 
 program
   .command('page <name>')

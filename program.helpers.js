@@ -43,6 +43,7 @@ exports.createFile = (name, source, dest) => {
 exports.copyFiles = (source, dest) => {  
   return new Promise( (fulfill, reject) => {
     ncp(source, dest, (err) => {      
+      console.log(err);
       if (err) reject(err);      
       fulfill('files copied');
     })
