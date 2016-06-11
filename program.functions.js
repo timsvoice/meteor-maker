@@ -37,14 +37,15 @@ exports.newProject = (name) => {
 
 exports.newAPI = (name) => {
   
-  const templatePath = '/usr/local/lib/node_modules/meteor-maker/files/imports/api/newAPI';
+  const templatePath = '/usr/local/lib/node_modules/meteor-maker/templates/newAPI';
   const destPath = 'imports/api/' + name;
   const registerAPI = "\nimport '../../api/" + name + "/methods.js';";
   const newNames = [
     'imports/api/' + name + '/' + name + '.tests.js',
     'imports/api/' + name + '/' + name + '.js',
     'imports/api/' + name + '/' + name + '.methods.js',
-    'imports/api/' + name + '/server/' + name + '.methods.js',
+    'imports/api/' + name + '/server/' + name + '.publications.js',
+    'imports/api/' + name + '/server/' + name + '.publications.tests.js',
   ];
 
   helpers.createDir(name, './imports/api').then( (res) => {

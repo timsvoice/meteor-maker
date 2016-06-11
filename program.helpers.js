@@ -79,8 +79,7 @@ exports.deleteFiles = (files) => {
   })
 }
 
-exports.processTemplateFiles = (files, variables, newNames) => {  
-  console.log(files);
+exports.processTemplateFiles = (files, variables, newNames) => {    
   return new Promise( (fulfill, reject) => {
     files.forEach((filePath, ind) => {
       let file = fs.readFile(filePath, (err, data) => {
