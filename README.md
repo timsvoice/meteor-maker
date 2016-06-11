@@ -33,6 +33,9 @@ Will generate `.html`, `.js`, `.scss` files for a new UI element, where type is 
 ####Dependencies
 
 [commander](https://www.npmjs.com/package/commander)
+
 [recursive-readdir](https://www.npmjs.com/package/recursive-readdir)
+
 [ncp](https://www.npmjs.com/package/ncp)
+
 [handlebars](https://www.npmjs.com/package/handlebars)
