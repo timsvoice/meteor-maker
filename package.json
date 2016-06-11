@@ -1,6 +1,6 @@
 {
   "name": "meteor-maker",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "CLI Scaffolding tool for Meteor applications based on the Meteor 1.3 Guide",
   "main": "index.js",
   "scripts": {
