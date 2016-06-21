@@ -10,7 +10,7 @@ program
   .command('project <name>')
   .description('Scaffold a new Meteor project')
   .action((name) => {
-    if (typeOf name != 'string') return console.log('Name must be a string');
+    if (typeof name != 'string') return console.log('Name must be a string');
     return functions.newProject(name)
   });
 
@@ -18,7 +18,7 @@ program
   .command('g:method <name>')
   .description('Create a new method')
   .action((name) => {
-    if (typeOf name != 'string') return console.log('Name must be a string');
+    if (typeof name != 'string') return console.log('Name must be a string');
     return functions.newMethod(name)
   });
 
@@ -27,7 +27,7 @@ program
   .description('Create a new API with methods and tests')
   .option('-T, --no-tests', 'don\'t include a test file')
   .action((name) => {
-    if (typeOf name != 'string') return console.log('Name must be a string');
+    if (typeof name != 'string') return console.log('Name must be a string');
     return functions.newAPI(name)
   });
 

@@ -79,9 +79,11 @@ exports.deleteFiles = (files) => {
   })
 }
 
-exports.processTemplateFiles = (files, variables, newNames) => {    
+exports.processTemplateFiles = (files, variables, newNames) => {  
   return new Promise( (fulfill, reject) => {
-    files.forEach((filePath, ind) => {
+    files.forEach((filePath, ind) => {      
+      // do not process DS_Store files
+      if (filePath.indexOf(".DS_Store") > -1) return;
       let file = fs.readFile(filePath, (err, data) => {
         if (err) reject(err);
         if (data) {
@@ -93,7 +95,8 @@ exports.processTemplateFiles = (files, variables, newNames) => {
             let newPath = newNames[ind];
             fs.writeFile(newPath, result);
             fs.unlink(filePath);
-          } else {
+            console.log('newnames', newNames);
+          } else {            
             fs.writeFile(filePath, result);
           }          
           fulfill(result);
