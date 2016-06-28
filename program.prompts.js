@@ -23,6 +23,15 @@ exports.newProjectPrompts = [
   }
 ]
 
+exports.newApiPrompts = [
+  {
+    type: 'confrim',
+    name: 'crudMethods',
+    message: 'Create CRUD methods for this API?',
+    default: true,
+  }
+]
+
 exports.newMethodPrompts = [
   {
     type: 'list',

@@ -29,7 +29,6 @@
   "homepage": "https://github.com/timsvoice/meteor-maker#readme",
   "dependencies": {
     "commander": "^2.9.0",
-    "foundation-sites": "^6.2.3",
     "handlebars": "^4.0.5",
     "inquirer": "^1.0.3",
     "ncp": "^2.0.0",
