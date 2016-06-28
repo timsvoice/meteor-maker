@@ -95,7 +95,6 @@ exports.processTemplateFiles = (files, variables, newNames) => {
             let newPath = newNames[ind];
             fs.writeFile(newPath, result);
             fs.unlink(filePath);
-            console.log('newnames', newNames);
           } else {            
             fs.writeFile(filePath, result);
           }          
