@@ -14,12 +14,11 @@ describe('{{capitalize apiName}}', function () {
   beforeEach(function() {
     StubCollections.add([{{capitalize apiName}}]);
     StubCollections.stub();
-    // Create Product Record
-    Factory.define('{{apiName}}', {{capitalize apiName}}, {
-      name: 'New {{singular apiName}}',
-    });
-
-    Factory.create('{{apiName}}');
+    // Create {{capitalize apiName}} Record
+    {{apiName}}Data = {
+      name: faker.lorem.words(3),
+    };
+    {{capitalize apiName}}.insert({{apiName}}Data);
   })
 
   afterEach(function() {

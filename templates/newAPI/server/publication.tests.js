@@ -14,18 +14,16 @@ describe('{{capitalize apiName}} Publication', function () {
     // Create Product Record
     Factory.define('{{apiName}}', {{capitalize apiName}}, {
       name: faker.lorem.words(3),
-      price: faker.random.number(2),
-      description: faker.lorem.sentence(),
     });
 
     Factory.create('{{apiName}}');
   })
 
-  it('Should return an {{capitalize apiName}} publication with one record', function() {
+  it('Should return an {{capitalize apiName}} publication with at least one record', function() {
     const collector = new PublicationCollector();
 
     collector.collect('{{apiName}}.public', (collection) => {
-      assert.equal(collection.{{capitalize apiName}}.length, 1);
+      assert.isAbove(collection.{{capitalize apiName}}.length, 1);
     })
   })
 })
