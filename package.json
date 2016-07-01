@@ -30,6 +30,7 @@
   "dependencies": {
     "commander": "^2.9.0",
     "handlebars": "^4.0.5",
+    "inflection": "^1.10.0",
     "inquirer": "^1.0.3",
     "ncp": "^2.0.0",
     "recursive-readdir": "^2.0.0"
