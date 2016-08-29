@@ -23,7 +23,7 @@ describe('{{capitalize apiName}} Publication', function () {
     const collector = new PublicationCollector();
 
     collector.collect('{{apiName}}.public', (collection) => {
-      assert.isAbove(collection.{{capitalize apiName}}.length, 1);
+      assert.isAbove(collection.{{capitalize apiName}}.length, 0);
     })
   })
 })

@@ -1,6 +1,6 @@
 {
   "name": "meteor-maker",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "CLI Scaffolding tool for Meteor applications based on the Meteor 1.3 Guide",
   "main": "index.js",
   "scripts": {
@@ -33,13 +33,13 @@
     "inflection": "^1.10.0",
     "inquirer": "^1.0.3",
     "ncp": "^2.0.0",
-    "recursive-readdir": "^2.0.0"
+    "recursive-readdir": "^2.0.0",
+    "underscore": "^1.8.3",
+    "verbal-expressions": "^0.2.1"
   },
   "devDependencies": {
     "babel-register": "^6.9.0",
     "chai": "^3.5.0",
-    "mocha": "^2.5.3",
-    "underscore": "^1.8.3",
-    "verbal-expressions": "^0.2.1"
+    "mocha": "^2.5.3"
   }
 }
